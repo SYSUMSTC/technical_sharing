@@ -1,0 +1,227 @@
+\documentclass{beamer}
+\usetheme{Aalborg}
+
+\usepackage{hyperref,graphicx}
+\usepackage{verbatim,hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{tgheros}
+\usepackage[T1]{fontenc}
+
+\begin{document}
+\title{An Introduction to Python}
+\subtitle{MSTC Technical Sharing}
+\author{Richard Tsai}
+\institute{
+Microsoft Student Technology Club,\\
+Sun Yat-sen University}
+\date{\today}
+
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\begin{frame}{Agenda}
+ \tableofcontents
+\end{frame}
+
+\section{What's Python?}
+\subsection{Python the Language}
+\begin{frame}{What's Python?}
+ \begin{block}{Python is a programming language.}
+  \begin{figure}[htb!]
+   \includegraphics[scale=0.5]{python-logo-generic}\footnotemark
+  \end{figure}
+ \end{block}
+ \footnotetext{Image from Python Software Foundation}
+\end{frame}
+
+\subsection{Easy-to-read}
+\begin{frame}{An easy-to-read language}
+ \begin{block}{Python is an easy-to-read language.}\pause
+  \begin{itemize}
+   \item Forced indentation\pause
+   \item Less braces\pause
+   \item etc.
+  \end{itemize}
+ \end{block}
+\end{frame}
+
+
+\subsection{Easy-to-write}
+\begin{frame}{An easy-to-write language}\pause
+ \begin{block}{Python is an easy-to-write language.}\pause
+  \begin{itemize}
+   \item Dynamic typing\pause
+   \item Useful built-in data types\pause
+   \item Lots of syntax sugars\pause
+   \item Lots of libraries\pause
+   \item etc.
+  \end{itemize}
+ \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{A (kidding) example}
+Calculate $\displaystyle\sum_{n=1}^{10} n ^ n$ ...
+\pause
+\begin{block}{Python}
+\begin{verbatim}
+print sum(n ** n for n in range(1, 11))
+\end{verbatim}
+\end{block}
+\pause
+\begin{block}{C++11}
+\begin{verbatim}
+int64_t seq[10], i = 0;
+std::generate_n(seq, 10,
+        [&i](){ ++i; return pow(i, i); });
+std::cout << std::accumulate(seq, seq + 10,
+        static_cast<int64_t>(0)) << std::endl;
+\end{verbatim}
+\end{block}
+\end{frame}
+
+\subsection{Learn Python in 5 minutes}
+\begin{frame}[fragile]{Learn Python in 5 minutes}\pause
+\begin{columns}
+\column{0.5\textwidth}
+\begin{block}{Loop}
+\begin{verbatim}
+for i in range(3):
+    print i
+
+for i in [0, 1, 2]:
+    print i
+
+while i < 3:
+    print i
+    i += 1
+\end{verbatim}
+\end{block}
+\pause
+\column{0.5\textwidth}
+\begin{block}{Condition}
+\begin{verbatim}
+if a == b:
+    print 'a equals to b'
+\end{verbatim}
+\end{block}
+\pause
+\begin{block}{Function}
+\begin{verbatim}
+def f(n):
+    return n + 1
+
+print f(1)
+\end{verbatim}
+\end{block}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}[fragile]{Learn Python in 5 minutes}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{block}{Data types}
+\begin{verbatim}
+l = ['one', 2, 3]
+print l[0] # one
+print l[1:3] # [2, 3]
+
+t = ('one', 2, 3)
+print l[1] # one
+
+d = {'one': 1, 'two': 2}
+print d['two'] # 2
+
+s = {'one', 2, 3}
+if 3 in s:
+    print '3 is in s'
+\end{verbatim}
+\end{block}
+\pause
+\column{0.5\textwidth}
+\begin{block}{Packages}
+\begin{verbatim}
+import math
+math.sin(math.pi / 2)
+\end{verbatim}
+\end{block}
+\pause
+\begin{block}{Run a Python program}
+\begin{itemize}
+ \item Interactive interpreter\newline
+ (IPython recommended)
+ \item Run as a script
+\end{itemize}
+\end{block}
+\end{columns}
+\end{frame}
+
+\section{What can Python do?}
+\subsection{Some applications}
+\begin{frame}{What can Python do?}\pause
+\begin{block}{Some applications}
+ \begin{itemize}
+  \item As a shell script language\pause
+  \item Web apps (WSGI, Flask, Django, Tornado...)\pause
+  \item Scientific calculations (Numpy, Scipy...)\pause
+  \item Parallel computing (multiprocessing, pp, mpi4py...)\pause
+  \item Many other things you can and cannot imagine...
+ \end{itemize}
+\end{block}
+\end{frame}
+
+\section{When (not) to use Python?}
+\subsection{Drawbacks of Python}
+\begin{frame}{When (not) to use Python?}\pause
+ \begin{block}{Drawbacks of Python}
+  \begin{itemize}
+   \item Performance\pause
+   \item Fxxking GIL\pause
+   \item Hard to debug\pause
+   \item Suck documents (to some extent)\pause
+   \item Odd support in functional programming (IMO)\pause
+  \end{itemize}
+ \end{block}
+ 
+ \begin{block}{When (not) to use Python?}
+ \end{block}
+\end{frame}
+
+\section{Accelerate Python}
+\begin{frame}{Accelerate Python}\pause
+ \begin{block}{Pareto principle}\pause
+ \end{block}
+ \begin{block}{Accelerate Python with other languages}
+  \begin{itemize}
+   \item Third-party libraries
+   \item Python C API
+   \item SWIG, SIP...
+   \item ctypes
+   \item Cython
+  \end{itemize}
+ \end{block}
+\end{frame}
+
+\section{Resources}
+\begin{frame}{Resources}
+ \begin{itemize}
+  \item Python's official website: \url{http://www.python.org}
+  \item Beginner's Guide to Python: \url{https://wiki.python.org/moin/BeginnersGuide}
+ \end{itemize}
+\end{frame}
+
+\section*{Other things}
+\begin{frame}{Q\&A}
+\begin{center}
+ \Huge Q\&A
+\end{center}
+\end{frame}
+
+\begin{frame}{Thanks}
+\begin{center}
+ \Huge Thanks!
+\end{center}
+\end{frame}
+
+\end{document}
