@@ -1,0 +1,160 @@
+% DO NOT COMPILE THIS FILE DIRECTLY!
+% This is included by the other .tex files.
+
+\begin{frame}[t,plain]
+\titlepage
+\end{frame}
+
+\begin{frame}
+  \frametitle{Outline}
+  \tableofcontents
+\end{frame}
+
+\AtBeginSubsection[]                            % 在每个子段落之前
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \setlength{\parskip}{0\baselineskip}
+    \tableofcontents[current,currentsubsection]
+    \setlength{\parskip}{0.5\baselineskip}
+  \end{frame}
+}
+
+\AtBeginSection[]                            % 在每个子段落之前
+{
+  \begin{frame}
+    \frametitle{Table of Contents}
+    \setlength{\parskip}{0\baselineskip}
+    \tableofcontents[current,currentsubsection]
+    \setlength{\parskip}{0.5\baselineskip}
+  \end{frame}
+}
+
+\section{Scheduling Problem}
+\begin{frame}[t]{Problem Background}
+  \begin{itemize}[<+->]
+    \item Determine a work schedule for assistants that is both reasonable
+       and efficient.
+    \item Entities:
+      \begin{itemize}
+        \item Assistants set $A$
+        \item Time period set $T$
+      \end{itemize}
+    \item Requirements:
+      \begin{itemize}
+        \item efficient: There should be sufficient assistants in any specific
+          time periods.
+        \item reasonable:
+          \begin{itemize}
+            \item Assistants should not work when they are having courses.
+            \item Assistants should not work at multiple places in the meantime.
+            \item Work times among students should not vary widely.
+          \end{itemize}
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Modeling}
+  How can we describe the problem in mathematical model?
+  \begin{itemize}[<+->]
+    \item Let's review the problem again.
+      \begin{itemize}
+        \item VARIABLES: assistant set $A$ consisting of $n$ assistants, time
+          period set $T$ consisting of $m$ time period, the i-th assistant $A_i$
+          has some free time period $F_i$, where $F_i \in T$
+        \item OPERATION: select a certain free time $F$, and discard the
+          others
+        \item TARGET: Work time for an assistant and quantity of assistant of a
+          time period are in a specific range. No assistant will simultaneously
+          work in overlapping time period.
+      \end{itemize}
+    \item Method: construct a matrix, with assistants as rows, time periods as
+      column.
+
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Matrix Notation}
+$$\begin{pmatrix}
+  1& 1& 1& 0\\
+  1& 0& 1& 1\\
+  1& 1& 1& 1\\
+  1& 0& 1& 1
+  \end{pmatrix}$$
+  \begin{itemize}
+    \item A matrix $M$ representing the free time period.
+    \item OPERATION: change a certain entries from 1 to 0.
+    \item TARGET: $\forall j \in [1, m], \sum_{i=1}^nM_{ij}$ and $\forall i \in
+      [1, n], \sum_{j=1}^mM_{ij}$
+  \end{itemize}
+\end{frame}
+
+\section{Algorithm}
+\begin{frame}[t]{Brainstorm}
+  \begin{center}
+  \huge{What will you probably do to solve this problem?}
+  \end{center}
+\end{frame}
+
+\begin{frame}[t]{Evaluation}
+  How to evaluate an algorithm?
+  \begin{itemize}[<+->]
+    \item Efficiency?
+    \item Flexibility
+    \item Extendability
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[t]{First Attempt: Genetic Algorithm}
+  \begin{itemize}
+    \item An algorithm adapting Darwin's evolution theory by natural selection
+    \item Steps
+      \begin{itemize}
+        \item Initialization
+        \item Evaluation
+        \item Selection
+        \item Crossover
+        \item Mutation
+        \item Termination
+      \end{itemize}
+    \item Pros \& Cons
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Second Attempt: Encoding into Constraint Satisfaction Problem}
+  \begin{itemize}[<+->]
+    \item A constraint satisfaction problem is defined as a triple $\langle X,D,C
+      \rangle$, where
+      \begin{itemize}
+          \item $X = \{X_1, \ldots,X_n\}$ is a set of variables,
+          \item $D = \{D_1, \ldots, D_n\}$ is a set of the respect domains of values,
+          and
+          \item $C = \{C_1, \ldots, C_m\}$ is a set of constraints.
+      \end{itemize}
+    \item Now we can encode sceduling problem into CSP.
+    \item Typically, There are two type of algorithms.
+      \begin{itemize}
+        \item complete search
+        \item incomplete search, or local search
+      \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Local Search}
+  A general framework of local search:
+  \begin{itemize}
+    \item Randomly generate a solution.
+    \item find a possible better variable to flip.
+    \item if stuck in a local optima, restart the procedure.
+  \end{itemize}
+
+  Local search has cycling problem!
+\end{frame}
+
+\section{Extensions}
+\begin{frame}[t]{Extensions}
+  \begin{itemize}[<+->]
+    \item Nurse Scheduling Problem
+    \item Course Scheduling Problem
+  \end{itemize}
+\end{frame}

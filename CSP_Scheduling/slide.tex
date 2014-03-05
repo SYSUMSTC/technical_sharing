@@ -1,0 +1,32 @@
+\documentclass{beamer}
+\usetheme[pageofpages=of,% String used between the current page and the
+                         % total page count.
+          alternativetitlepage=true,% Use the fancy title page.
+          %titlepagelogo=logo-polito,% Logo for the first page.
+          %watermarkheightmult=4,% The watermark image is 4 times bigger
+                                % than watermarkheight.
+          ]{Torino}
+
+% Nouvelle is a green and red alternative to the chameleon color theme.
+\usecolortheme{nouvelle}
+
+
+\usepackage{xeCJK}
+\usepackage{algorithm2e}
+
+\setCJKmainfont[BoldFont={Adobe Heiti Std},
+ItalicFont={Adobe Song Std}]
+{Adobe Song Std}
+\setCJKmonofont{Adobe Fangsong Std}
+
+\author{Jianhong Li}
+\title{Scheduling Problem and Local Search}
+\institute{MSTC, Sun Yat-sen Univ.}
+\date{\today}
+
+\begin{document}
+
+\include{content}
+
+\end{document}
+
