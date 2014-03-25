@@ -1,0 +1,10 @@
+Function                 Module        CPU Time:Self  Overhead Time:Self  Spin Time:Self
+-----------------------  ------------  -------------  ------------------  --------------
+main$omp$parallel_for@8  test_openmp          41.882                   0               0
+sin                      test_openmp          12.750                   0               0
+[test_openmp]            test_openmp           1.990                   0               0
+sin                      test_openmp           1.097                   0               0
+[OpenMP worker]          libiomp5.so           0.339                   0           0.339
+[OpenMP fork]            libiomp5.so           0.180                   0           0.180
+[libiomp5.so]            libiomp5.so           0.050                   0           0.050
+[libc-2.12.so]           libc-2.12.so          0.010                   0           0.010
