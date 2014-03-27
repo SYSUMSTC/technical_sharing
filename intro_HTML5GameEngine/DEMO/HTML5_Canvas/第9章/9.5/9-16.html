@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"> 
+<title>Box2dWeb Demo</title>
+<script type="text/javascript" src="../../Box2dWeb-2.1.a.3.min.js"></script> 
+<script type="text/javascript" src="../../lufylegend-1.7.6.js"></script> 
+</head>
+<body onload='init(10,"mylegend",600,400,main,LEvent.INIT)'>
+<div id="mylegend">loading……</div>
+<script type="text/javascript">
+var backLayer,cLayer;
+function main(){	
+	LGlobal.setDebug(true);	
+	backLayer = new LSprite();	
+	addChild(backLayer);	
+
+	LGlobal.box2d = new LBox2d();
+	cLayer = new LSprite();
+	cLayer.x = 300;
+	cLayer.y = 390;
+	backLayer.addChild(cLayer);
+	cLayer.addBodyPolygon(600,10,0,5,0.4,0.2);
+	
+	box01 = new LSprite();
+	box01.x = 200;
+	box01.y = 100;
+	backLayer.addChild(box01);
+	box01.addBodyCircle(20,0,0,0,1,0.5,0.6);
+	
+	box02 = new LSprite();
+	box02.x = 200;
+	box02.y = 200;
+	backLayer.addChild(box02);
+	box02.addBodyCircle(20,0,0,1,1,0.4,0.2);
+	box02.setBodyMouseJoint(true);
+	
+	LGlobal.box2d.setLineJoint(box01.box2dBody, box02.box2dBody,[0.4,1],[-2,2],[200,10]);
+	//LGlobal.box2d.setPrismaticJoint(box01.box2dBody, box02.box2dBody,[0,1],[-5,2.5],[1,0]);
+}
+</script> 
+</body>
+</html>

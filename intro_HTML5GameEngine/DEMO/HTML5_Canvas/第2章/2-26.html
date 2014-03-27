@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+</head>
+<body>
+<canvas id="myCanvas" width="500" height="500">
+你的浏览器不支持HTML5
+</canvas>
+<script type="text/javascript">
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+var image = new Image();    
+image.src = "face.jpg";  
+image.onload = function(){    
+	ctx.drawImage(image,10,10);  
+	var imgData=ctx.getImageData(50,50,200,200);
+	ctx.putImageData(imgData,10,260); 
+    ctx.putImageData(imgData,200,260,50,50,100,100);
+};    
+</script>
+</body>
+</html>

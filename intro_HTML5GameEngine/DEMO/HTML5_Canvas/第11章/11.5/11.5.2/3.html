@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>使用位运算来求余</title>
+</head>
+
+<body>
+  <div>
+    <header>
+      <h1>使用位运算来求余</h1>
+    </header>
+    <nav>
+      <p>
+		<h1>使用"Math.pow"函数来求n次幂，循环100000000此所需时间：</h1>
+		<h2>
+			<script type="text/javascript">
+  			var i,r,start,end;
+  			start = new Date();
+  			for (i=0; i < 100000000; i++) {
+				r = Math.pow(2,5);
+			};
+  			end = new Date();
+  			document.write("Math.pow(2,3)="+r + " 耗时：" + (end.getTime() - start.getTime()));
+			</script>
+			<!-- 10次平均值 chrome：531，firefox：5001 safari:3069 opera：22845-->
+		</h2>
+	  </p>
+      <p>
+		<h1>直接通过乘法运算来求n次幂，循环100000000此所需时间：</h1>
+		<h2>
+			<script type="text/javascript">
+  			var i,r,start,end;
+  			start = new Date();
+  			for (i=0; i < 100000000; i++) {
+				r = 2 * 2 * 2 * 2 * 2;
+			};
+  			end = new Date();
+  			document.write("2 * 2 * 2="+r + " 耗时：" + (end.getTime() - start.getTime()));
+			</script>
+			<!-- 10次平均值 chrome：466，firefox：380 safari:984 opera：529-->
+		</h2>
+	  </p>
+    </nav>
+  </div>
+  <script type="text/javascript">
+  	
+  	
+  </script>
+</body>
+</html>

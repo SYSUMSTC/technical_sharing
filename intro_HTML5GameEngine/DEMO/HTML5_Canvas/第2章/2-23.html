@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+</head>
+<body>
+img标签<br />
+<img id="face" src="face.jpg" alt="The Face" width="240" height="240" /><br />
+canvas画板<br />
+<canvas id="myCanvas" width="500" height="350">
+你的浏览器不支持HTML5
+</canvas>
+<script type="text/javascript">
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+
+var img=document.getElementById("face");
+
+img.onload = function(){    
+   ctx.drawImage(img,10,10);   
+};   
+
+</script>
+</body>
+</html>

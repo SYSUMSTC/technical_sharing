@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>绘图时避免使用小数</title>
+</head>
+<body>
+<canvas id="myCanvas" width="800" height="280"></canvas>
+<div id="result"></div>
+<script type="text/javascript">
+var c=document.getElementById('myCanvas');
+var ctx=c.getContext('2d');
+var img = new Image();
+img.src="../face.jpg";
+var img_mini = new Image();
+
+img.onload = function(){
+	img_mini.src="../face_mini.jpg";
+	img_mini.onload = draw;
+};
+function draw(){
+  	var i,r,start,end;
+  	start = new Date();
+  	for (i=0; i < 1000; i++) {
+		ctx.drawImage(img,20,20);
+	};
+  	end = new Date();
+  	document.getElementById('result').innerHTML += "ctx.drawImage(img,20,20) 耗时：" + (end.getTime() - start.getTime());
+  	//chrome 107 firfox 75
+  	document.getElementById('result').innerHTML += "<br />";
+  	start = new Date();
+  	for (i=0; i < 1000; i++) {
+		ctx.drawImage(img,280,20,50,50);
+	};
+  	end = new Date();
+  	document.getElementById('result').innerHTML += "ctx.drawImage(img,280,20,50,50) 耗时：" + (end.getTime() - start.getTime());
+  	//chrome 47 firfox 110
+  	document.getElementById('result').innerHTML += "<br />";
+  	start = new Date();
+  	for (i=0; i < 1000; i++) {
+		ctx.drawImage(img_mini,20,280);
+	};
+  	end = new Date();
+  	document.getElementById('result').innerHTML += "ctx.drawImage(img_mini,20,280) 耗时：" + (end.getTime() - start.getTime());
+  	//chrome 47 firfox 110
+}
+</script>
+</body>
+</html>

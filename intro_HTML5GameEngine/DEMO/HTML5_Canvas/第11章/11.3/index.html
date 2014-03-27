@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>图片格式对效率基本没有影响</title>
+</head>
+<body>
+<canvas id="myCanvas" width="800" height="600"></canvas>
+<div id="result"></div>
+<script type="text/javascript">
+var c=document.getElementById('myCanvas');
+var ctx=c.getContext('2d');
+var img_jpg = new Image();
+var img_png = new Image();
+var img_gif = new Image();
+var img_bmp = new Image();
+img_jpg.src="../face.jpg";
+img_jpg.onload = jpg_load;
+function jpg_load(){
+	img_png.src="../face.png";
+	img_png.onload = png_load;
+};
+function png_load(){
+	img_gif.src="../face.gif";
+	img_gif.onload = gif_load;
+};
+function gif_load(){
+	img_bmp.src="../face.bmp";
+	img_bmp.onload = draw;
+};
+function draw(){
+  	var i,r,start,end;
+  	start = new Date();
+  	for (i=0; i < 10000; i++) {
+		ctx.drawImage(img_jpg,20,20);
+	};
+  	end = new Date();
+  	document.getElementById('result').innerHTML += "jpg 耗时：" + (end.getTime() - start.getTime());
+  	//chrome 801 firfox 418 safari：1318 opera:405
+  	document.getElementById('result').innerHTML += "<br />";
+  	start = new Date();
+  	for (i=0; i < 10000; i++) {
+		ctx.drawImage(img_png,280,20);
+	};
+  	end = new Date();
+  	document.getElementById('result').innerHTML += "png 耗时：" + (end.getTime() - start.getTime());
+  	//chrome 774 firfox 461 safari：854 opera:506
+  	document.getElementById('result').innerHTML += "<br />";
+  	start = new Date();
+  	for (i=0; i < 10000; i++) {
+		ctx.drawImage(img_gif,20,280);
+	};
+  	end = new Date();
+  	document.getElementById('result').innerHTML += "gif 耗时：" + (end.getTime() - start.getTime());
+  	//chrome 782 firfox 452 safari：1232 opera:792
+  	document.getElementById('result').innerHTML += "<br />";
+  	start = new Date();
+  	for (i=0; i < 10000; i++) {
+		ctx.drawImage(img_bmp,280,280);
+	};
+  	end = new Date();
+  	document.getElementById('result').innerHTML += "bmp 耗时：" + (end.getTime() - start.getTime());
+  	//chrome 768 firfox 459 safari：891 opera:445
+}
+</script>
+</body>
+</html>

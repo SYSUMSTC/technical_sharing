@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"> 
+<title>Box2dWeb Demo</title>
+<script type="text/javascript" src="../../Box2dWeb-2.1.a.3.min.js"></script> 
+<script type="text/javascript" src="../../lufylegend-1.7.6.js"></script> 
+</head>
+<body onload='init(10,"mylegend",600,400,main,LEvent.INIT)'>
+<div id="mylegend">loading……</div>
+<script type="text/javascript">
+var backLayer,cLayer;
+function main(){	
+	LGlobal.setDebug(true);	
+	backLayer = new LSprite();	
+	addChild(backLayer);	
+
+	LGlobal.box2d = new LBox2d();
+	cLayer = new LSprite();
+	cLayer.x = 300;
+	cLayer.y = 390;
+	backLayer.addChild(cLayer);
+	cLayer.addBodyPolygon(600,10,0,5,0.4,0.2);
+	
+	box01 = new LSprite();
+	box01.x = 200;
+	box01.y = 200;
+	backLayer.addChild(box01);
+	box01.addBodyCircle(100,0,0,1,1,0.5,0.6);
+	box01.setBodyMouseJoint(true);
+	
+	box02 = new LSprite();
+	box02.x = 200;
+	box02.y = 200;
+	backLayer.addChild(box02);
+	box02.addBodyCircle(20,0,0,0,1,0.4,0.2);
+	
+	box03 = new LSprite();
+	box03.x = 500;
+	box03.y = 200;
+	backLayer.addChild(box03);
+	box03.addBodyCircle(20,0,0,1,1,0.5,0.6);
+	box03.setBodyMouseJoint(true);
+	
+	var revoluteJoint = LGlobal.box2d.setRevoluteJoint(box02.box2dBody, box01.box2dBody);
+	
+	var prismaticJoint = LGlobal.box2d.setPrismaticJoint(box03.box2dBody,box02.box2dBody,[1,0],[-5,2.5],[1,0]);
+	
+	
+	LGlobal.box2d.setGearJoint(box01.box2dBody, box03.box2dBody,1,revoluteJoint,prismaticJoint);
+}
+</script> 
+</body>
+</html>

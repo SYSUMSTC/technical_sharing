@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>使用位运算来求余</title>
+</head>
+
+<body>
+  <div>
+    <header>
+      <h1>使用位运算来求余</h1>
+    </header>
+    <nav>
+      <p>
+		<h1>"321%4"运算，循环100000000此所需时间：</h1>
+		<h2>
+			<script type="text/javascript">
+  			var i,r,start,end;
+  			start = new Date();
+  			for (i=0; i < 100000000; i++) {
+				r = 321 % 4;
+			};
+  			end = new Date();
+  			document.write("321%4="+r + " 耗时：" + (end.getTime() - start.getTime()));
+			</script>
+			<!-- 10次平均值 chrome：540，firefox：396 safari：1043 opera：314 -->
+		</h2>
+	  </p>
+      <p>
+		<h1>"321&3"运算，循环100000000此所需时间：</h1>
+		<h2>
+			<script type="text/javascript">
+  			var i,r,start,end;
+  			start = new Date();
+  			for (i=0; i < 100000000; i++) {
+				r = 321 & 3;
+			};
+  			end = new Date();
+  			document.write("321&3="+r + " 耗时：" + (end.getTime() - start.getTime()));
+			</script>
+			<!-- 10次平均值 chrome：470，firefox：376 safari：1060 opera：263 -->
+		</h2>
+	  </p>
+    </nav>
+  </div>
+  <script type="text/javascript">
+  	
+  	
+  </script>
+</body>
+</html>

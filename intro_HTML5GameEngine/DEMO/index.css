@@ -1,0 +1,39 @@
+button
+{
+	width:81.5px;
+	background:#DDD;
+}
+#black
+{
+background:black;
+}
+#white
+{
+background:white;
+}
+#yellow
+{
+background:yellow;
+}
+#green
+{
+background:green;
+}
+#blue
+{
+background:blue;
+}
+#purple
+{
+background:purple;
+}
+#orange
+{
+background:orange;
+}
+#mylegend
+{
+height: 400px;
+width: 600px;
+}
+

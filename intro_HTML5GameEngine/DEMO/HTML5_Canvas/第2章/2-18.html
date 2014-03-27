@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+</head>
+<body>
+<canvas id="myCanvas" width="500" height="300">
+你的浏览器不支持HTML5
+</canvas>
+<script type="text/javascript">
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+
+ctx.beginPath();
+//设定文字字体为Arial
+ctx.font="30px Arial";
+ctx.fillText("Hello World (Arial)",50,50);
+
+ctx.beginPath();
+//设定文字字体为Verdana
+ctx.font="30px Verdana";
+ctx.fillText("Hello World (Verdana)",50,100);
+
+ctx.beginPath();
+//设定文字字体为Times New Roman
+ctx.font="30px Times New Roman";
+ctx.fillText("Hello World (Times New Roman)",50,150);
+
+ctx.beginPath();
+//设定文字字体为Courier New
+ctx.font="30px Courier New";
+ctx.fillText("Hello World (Courier New)",50,200);
+
+ctx.beginPath();
+//设定文字字体为serif
+ctx.font="30px serif";
+ctx.fillText("Hello World (serif)",50,250);
+
+ctx.beginPath();
+//设定文字字体为sans-serif
+ctx.font="30px sans-serif";
+ctx.fillText("Hello World (sans-serif)",50,300);
+</script>
+</body>
+</html>

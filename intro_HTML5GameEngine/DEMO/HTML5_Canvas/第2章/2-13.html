@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+</head>
+<body>
+<canvas id="myCanvas" width="300" height="300">
+你的浏览器不支持HTML5
+</canvas>
+<script type="text/javascript">
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+ctx.arc(100,100,40,0,360*Math.PI/180,true);
+ctx.clip();
+ctx.beginPath();
+//设定颜色
+ctx.fillStyle="lightblue";
+//绘制矩形
+ctx.fillRect(0,0,300,150);
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"> 
+<title>Box2dWeb Demo</title>
+<script type="text/javascript" src="../../Box2dWeb-2.1.a.3.min.js"></script> 
+<script type="text/javascript" src="../../lufylegend-1.7.6.min.js"></script> 
+</head>
+<body onload='init(10,"mylegend",600,400,main,LEvent.INIT)'>
+<div id="mylegend">loading……</div>
+<script type="text/javascript">
+var backLayer,cLayer,bitmap;
+var imglist = {};
+var imgData = new Array(
+		{name:"face",path:"./face.jpg"}
+		);
+function main(){	
+	LGlobal.setDebug(true);	
+	backLayer = new LSprite();	
+	backLayer.graphics.drawRect(0,"#000000",[0, 0, 600, 400],false);
+	addChild(backLayer);	
+	LLoadManage.load(imgData,null,gameInit);
+}
+function gameInit(result){
+	imglist = result;
+	
+	LGlobal.box2d = new LBox2d();
+	cLayer = new LSprite();
+	cLayer.x = 300;
+	cLayer.y = 390;
+	backLayer.addChild(cLayer);
+	cLayer.addBodyPolygon(600,10,0,0,0,0.5);
+	
+	cLayer = new LSprite();
+	cLayer.x = 200;
+	cLayer.y = 100;
+	backLayer.addChild(cLayer);
+	
+	bitmap = new LBitmapData(imglist["face"],50,50,190,190);
+	cLayer.graphics.beginBitmapFill(bitmap);
+	var verticesArray = [  
+	    [0,25],[25,0],[150,25],[150,75],[25,100],[0,75]
+	];  
+	cLayer.graphics.drawVertices(1,"#000000",verticesArray,true);
+	
+	var shapeArray = [  
+	    [[0,25],[25,0],[150,25],[150,75],[25,100],[0,75]]
+	];  
+	cLayer.addBodyVertices(shapeArray,25,75,1,.5,.4,.5); 
+}
+</script> 
+</body>
+</html>

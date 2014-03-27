@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+</head>
+<body>
+<canvas id="myCanvas" width="500" height="350">
+你的浏览器不支持HTML5
+</canvas>
+<script type="text/javascript">
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+
+ctx.beginPath();
+//设定font-weight为normal
+ctx.font='normal 30px Arial';
+ctx.fillText("Hello World (normal)",50,50);
+
+ctx.beginPath();
+//设定font-style为italic 
+ctx.font='italic 30px Arial';
+ctx.fillText("Hello World (italic)",50,90);
+
+ctx.beginPath();
+//设定font-style为oblique
+ctx.font='oblique 30px Arial';
+ctx.fillText("Hello World (oblique)",50,130);
+</script>
+</body>
+</html>

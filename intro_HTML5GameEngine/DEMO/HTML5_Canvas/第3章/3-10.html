@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+</head>
+<body>
+<canvas id="myCanvas" width="500" height="350" style="background-color: #ffffff;">
+你的浏览器不支持HTML5
+</canvas>
+<script type="text/javascript">
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+ctx.beginPath();
+ctx.strokeStyle = "#000000";
+ctx.strokeRect(200,50,100,50);
+
+ctx.transform (Math.cos(5*Math.PI/180),Math.sin(5*Math.PI/180),-Math.sin(5*Math.PI/180), Math.cos(5*Math.PI/180),0,0);
+ctx.beginPath();
+ctx.strokeStyle = "#cccccc";
+ctx.strokeRect(200,50,100,50);
+
+ctx.transform (Math.cos(10*Math.PI/180),Math.sin(10*Math.PI/180),-Math.sin(10*Math.PI/180), Math.cos(10*Math.PI/180),0,0);
+ctx.beginPath();
+ctx.strokeStyle = "#999999";
+ctx.strokeRect(200,50,100,50);
+</script>
+</body>
+</html>

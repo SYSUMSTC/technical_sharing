@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>使用位运算来求余</title>
+</head>
+
+<body>
+  <div>
+    <header>
+      <h1>使用位运算来求余</h1>
+    </header>
+    <nav>
+      <p>
+		<h1>通过"Math.max"函数来取最大值，循环100000000此所需时间：</h1>
+		<h2>
+			<script type="text/javascript">
+  			var i,r,start,end;
+  			start = new Date();
+  			for (i=0; i < 100000000; i++) {
+				r = Math.max(6,4);
+			};
+  			end = new Date();
+  			document.write("Math.max(6,4)="+r + " 耗时：" + (end.getTime() - start.getTime()));
+			</script>
+			<!-- 10次平均值 chrome：848，firefox：401 safari:8059 opera:8009-->
+		</h2>
+	  </p>
+      <p>
+		<h1>通过"if语句"来取最大值，循环100000000此所需时间：</h1>
+		<h2>
+			<script type="text/javascript">
+  			var i,r,start,end;
+  			start = new Date();
+  			for (i=0; i < 100000000; i++) {
+				if(6>4){
+					r = 6;
+				}else{
+					r = 4;
+				}
+			};
+  			end = new Date();
+  			document.write("if(6>4)="+r + " 耗时：" + (end.getTime() - start.getTime()));
+			</script>
+			<!-- 10次平均值 chrome：453，firefox：394 safari:982 opera:1720-->
+		</h2>
+	  </p>
+    </nav>
+  </div>
+  <script type="text/javascript">
+  	
+  	
+  </script>
+</body>
+</html>

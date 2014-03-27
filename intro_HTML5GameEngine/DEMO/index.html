@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset = "utf-8"/>
+		<link rel = "stylesheet" href = "index.css"/>
+		<script src = "function.js"></script>
+		<script src = "lufylegend-1.8.7.js"></script>
+	</head>
+	<body>
+		<div id = "mylegend">loading...</div>
+		<br>
+		<button id = "white"	onclick = 'linecolor = "white"		'>		white		</button>
+		<button id = "yellow"	onclick = 'linecolor = "yellow"		'>		yellow		</button>
+		<button id = "green"	onclick = 'linecolor = "green"		'>		green		</button>
+		<button id = "blue"		onclick = 'linecolor = "blue"		'>		blue		</button>
+		<button id = "purple"	onclick = 'linecolor = "purple"		'>		purple		</button>
+		<button id = "orange"	onclick = 'linecolor = "orange"		'>		orange		</button>
+		<button id = "black"	onclick = 'linecolor = "black"		'>		橡皮		    </button>
+
+		<div id = "menu">
+			<button id = "size2"	onclick = 'linw = 2'>	2px		</button>
+			<button id = "size3"	onclick = 'linw = 3'>	3px		</button>
+			<button id = "size4"	onclick = 'linw = 4'>	4px		</button>
+			<button id = "size5"	onclick = 'linw = 5'>	5px		</button>
+			<button id = "size6"	onclick = 'linw = 6'>	6px		</button>
+			<button id = "size7"	onclick = 'linw = 7'>	7px		</button>
+			<button id = "size8"	onclick = 'mvtimg()'>	导出  	</button>
+		</div>
+		<h1>
+			按住鼠标在黑色区域拖动即可画画TAT
+		</h1>
+		<p id = "note"></p>
+		<div>
+			<img id = "image" width = 600px height = 400px/>
+		</div>
+		<script type>
+			var canvas = document.getElementById("canvas");
+			init(0,"mylegend",600,400,main);	
+		</script>
+	</body>
+</html>
+
+
+
+

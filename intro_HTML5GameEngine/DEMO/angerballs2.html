@@ -1,0 +1,206 @@
+<!Doctype Html>
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<script src = "Box2dWeb-2.1.a.3.min.js"></script>
+		<script src = "lufylegend-1.8.7.js"></script>
+	</head>
+	<body>
+		<div id = "mylegend"></div>
+		<script>
+			init(10, "mylegend", 1000,400,main);
+			var backlayer,clayer,obma,gameover = false;
+			var rocket = {x:100,y:200};
+			var field = new LTextField();
+			var bitmapdata;
+			
+			
+			function main()
+			{
+				//LGlobal.setDebug(true);
+				LGlobal.box2d = new LBox2d();
+				backlayer = new LSprite();
+				addChild(backlayer);
+				field.x = 800;
+				field.y = 30;
+				field.color = "#cccccc";
+				field.text = "500";
+				field.setType(LTextFieldType.INPUT);
+				addChild(field);
+				addwall();
+				addbuild();
+				var shapearray = [
+					[[0,0],[1000,0],[1000,10],[0,10]],
+					[[1000,0],[1000,400],[990,400],[990,10]],
+					[[1000,400],[0,400],[0,390],[990,390]],
+					[[0,0],[10,0],[10,400],[0,400]],
+					[[220,230],[230,230],[230,400],[220,400]],
+					[[230,270],[260,270],[260,280],[230,280]],
+					[[520,240],[530,240],[530,400],[520,400]],
+					[[530,300],[560,300],[560,310],[530,310]],
+					[[820,290],[830,290],[830,400],[820,400]],
+					[[830,320],[860,320],[860,330],[830,330]],
+					[[950,100],[990,100],[990,110],[950,110]],
+					[[950,200],[990,200],[990,210],[950,210]]
+				];
+				clayer.addBodyVertices(shapearray,0,0,0,0.5,0.4,0.5);
+				backlayer.graphics.drawArc(1,"#336699",[rocket.x,rocket.y,50,0,2*Math.PI],true,"#336699");
+				/*
+				enemy = new LSprite();
+				enemy.name = "enemy";
+				enemy.x = 250;
+				enemy.y = 240;
+				backlayer.addChild(enemy);
+				enemy.addBodyPolygon(20,20,1,5,0.4,0.2);
+				enemy.graphics.drawRect(1,"#FF3399",[0,0,20,20],true,"#FF3399");
+				*/
+				backlayer.addEventListener(LMouseEvent.MOUSE_DOWN,createbox);
+				LGlobal.box2d.setEvent(LEvent.POST_SOLVE,postsolve);
+
+				loader = new LLoader();
+				loader.addEventListener(LEvent.COMPLETE,adddrag);
+				loader.load("img/drag3.jpg","bitmapData");
+			}
+			function postsolve(contact,impulse)
+			{
+				if(gameover)return;
+				var obja = contact.GetFixtureA().GetBody().GetUserData();
+				var objb = contact.GetFixtureB().GetBody().GetUserData();
+				if(obja.type  == "LSprite"&& objb.type == "LSprite")
+				  if( (obja.name == "mybox")&&(objb.name == "enemy") || (obja.name == "enemy")&&(objb.name == "mybox"))
+					{
+						gameover = true;
+						backlayer.removeChild( enemy);
+					}
+			}
+			function createbox(event)
+			{
+				var a = (event.offsetX - rocket.x);
+				var b = (event.offsetY - rocket.y);
+				var c2 = a*a + b*b;
+				if(c2 > 50*50)return;
+				var box = new LSprite();
+				box.name = "mybox";
+				box.x = event.selfX;
+				box.y = event.selfY;
+				backlayer.addChild(box);
+				box.graphics.beginBitmapFill(bitmapdata);
+				box.graphics.drawArc(1,"#000000",[20,20,20,0,360*Math.PI/180],true);//20,20,20
+				box.addBodyCircle(20,0,0,1,1,0.5,0.6);
+				var angle = Math.atan2(b,a);
+				var force = parseInt(field.text);
+			//	var force = 100;
+				var vector = new LGlobal.box2d.b2Vec2(force*Math.cos(angle),force*Math.sin(angle));
+				box.box2dBody.ApplyForce(vector, box.box2dBody.GetWorldCenter());
+			}
+			function adddrag()
+			{
+				bitmapdata = new LBitmapData(loader.content);
+			}
+			function addwall()
+			{
+				backlayer.graphics.drawRect( 1, "#cc3300", [0,0,1000,10],true,"#cc3300");
+				backlayer.graphics.drawRect( 1, "#cc3300", [990,0,10,400],true,"#cc3300");
+				backlayer.graphics.drawRect( 1, "#cc3300", [0,390,1000,10],true,"#cc3300");
+				backlayer.graphics.drawRect( 1, "#cc3300", [0,0,10,400],true,"#cc3300");
+
+				backlayer.graphics.drawRect( 1, "#cc3300", [220,230,10,170],true,"#cc3300");
+				backlayer.graphics.drawRect( 1, "#cc3300", [230,270,30,10],true,"#cc3300");
+
+				backlayer.graphics.drawRect( 1, "#cc3300", [520,240,10,160],true,"#cc3300");
+				backlayer.graphics.drawRect( 1, "#cc3300", [530,300,30,10],true,"#cc3300");
+
+				backlayer.graphics.drawRect( 1, "#cc3300", [820,290,10,110],true,"#cc3300");
+				backlayer.graphics.drawRect( 1, "#cc3300", [830,320,30,10],true,"#cc3300");
+
+				backlayer.graphics.drawRect( 1, "#cc3300", [950,100,40,10],true,"#cc3300");
+				backlayer.graphics.drawRect( 1, "#cc3300", [950,200,40,10],true,"#cc3300");
+				
+				clayer = new LSprite();
+				backlayer.addChild(clayer);
+			}
+			function addbuild()
+			{
+				loader1 = new LLoader();
+				afr = new LSprite();
+				addChild(afr);
+				loader1.addEventListener(LEvent.COMPLETE,addafr);
+				loader1.load("img/afr.png","bitmapData");
+				loader2 = new LLoader();
+				obm = new LSprite();
+				obm.name = "enemy";
+				backlayer.addChild(obm);
+				loader2.addEventListener(LEvent.COMPLETE,addobm);
+				loader2.load("img/obm.png","bitmapData");
+
+				loader3 = new LLoader();
+				xmy = new LSprite();
+				xmy.name = "enemy";
+				backlayer.addChild(xmy);
+				loader3.addEventListener(LEvent.COMPLETE,addxmy);
+				loader3.load("img/xmy.png","bitmapData");
+				
+				loader4 = new LLoader();
+				aef = new LSprite();
+				aef.name = "enemy";
+				backlayer.addChild(aef);
+				loader4.addEventListener(LEvent.COMPLETE,addaef);
+				loader4.load("img/aef.png","bitmapData");
+
+				loader5 = new LLoader();
+				whi = new LSprite();
+				whi.name = "enemy";
+				backlayer.addChild(whi);
+				loader5.addEventListener(LEvent.COMPLETE,addwhi);
+				loader5.load("img/whi.png","bitmapData");
+
+				//rigid body
+				/*
+				*/
+			}
+			function addafr()
+			{
+				afr.x = 850.5;
+				afr.y = 100;
+				var bitmapdata = new LBitmapData(loader1.content);
+				var bitmap = new LBitmap(bitmapdata);
+				afr.addChild(bitmap);
+				afr.addBodyPolygon(40,59,1,5,0.4,0.2);
+			}	function addobm()
+			{
+				obm.x = 250.5;
+				obm.y = 100;
+				var bitmapdata = new LBitmapData(loader2.content);
+				var bitmap = new LBitmap(bitmapdata);
+				obm.addChild(bitmap);
+				obm.addBodyPolygon(40,41,1,5,0.4,0.2);
+			}	function addxmy()
+			{
+				xmy.x = 550.5;
+				xmy.y = 100;
+				var bitmapdata = new LBitmapData(loader3.content);
+				var bitmap = new LBitmap(bitmapdata);
+				xmy.addChild(bitmap);
+				xmy.addBodyPolygon(40,96,1,5,0.4,0.2);
+			}	function addaef()
+			{
+				aef.x = 945.5;
+				aef.y = 92;
+				var bitmapdata = new LBitmapData(loader4.content);
+				var bitmap = new LBitmap(bitmapdata);
+				aef.addChild(bitmap);
+				aef.addBodyPolygon(50,108,1,5,0.4,0.2);
+			}	function addwhi()
+			{
+				whi.x = 960.5;
+				whi.y = 40;
+				var bitmapdata = new LBitmapData(loader5.content);
+				var bitmap = new LBitmap(bitmapdata);
+				whi.addChild(bitmap);
+				whi.addBodyPolygon(60,45,1,5,0.4,0.2);
+			}
+				
+		</script>
+	</body>
+</html>
+

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"> 
+<title>Box2dWeb Demo</title>
+<script type="text/javascript" src="../../Box2dWeb-2.1.a.3.min.js"></script> 
+<script type="text/javascript" src="../../lufylegend-1.7.6.min.js"></script> 
+</head>
+<body onload='init(10,"mylegend",600,400,main,LEvent.INIT)'>
+<div id="mylegend">loading……</div>
+<script type="text/javascript">
+var backLayer,cLayer;
+function main(){	
+	LGlobal.setDebug(true);	
+	backLayer = new LSprite();	
+	addChild(backLayer);	
+
+	LGlobal.box2d = new LBox2d();
+	cLayer = new LSprite();
+	cLayer.x = 300;
+	cLayer.y = 390;
+	backLayer.addChild(cLayer);
+	cLayer.addBodyPolygon(600,10,0,5,0.4,0.2);
+	//加入一个动态的圆形物体1
+	box01 = new LSprite();
+	box01.x = 250;
+	box01.y = 200;
+	backLayer.addChild(box01);
+	box01.addBodyCircle(100,0,0,1,1,0.4,0.2);
+	box01.setBodyMouseJoint(true);
+	//加入一个静态的圆形物体2
+	box02 = new LSprite();
+	box02.x = 250;
+	box02.y = 150;
+	backLayer.addChild(box02);
+	box02.addBodyCircle(10,0,0,0,1,0.4,0.2);
+	//加入一个旋转关节
+	LGlobal.box2d.setRevoluteJoint(box01.box2dBody, box02.box2dBody ,[-360,720*5],[450,2]);
+}
+</script>
+
+</body>
+</html>

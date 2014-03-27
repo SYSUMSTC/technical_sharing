@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+</head>
+<body>
+<canvas id="myCanvas" width="500" height="350">
+你的浏览器不支持HTML5
+</canvas>
+<script type="text/javascript">
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+
+ctx.beginPath();
+//设定font-weight为normal
+ctx.font='normal 30px Arial';
+ctx.fillText("Hello World (normal)",50,50);
+
+ctx.beginPath();
+//设定font-weight为bold 
+ctx.font='bold 30px Arial';
+ctx.fillText("Hello World (bold)",50,90);
+
+ctx.beginPath();
+//设定font-weight为bolder
+ctx.font='bolder 30px Arial';
+ctx.fillText("Hello World (bolder)",50,130);
+
+ctx.beginPath();
+//设定font-weight为lighter
+ctx.font='lighter 30px Arial';
+ctx.fillText("Hello World (lighter)",50,170);
+
+ctx.beginPath();
+//设定font-weight为100
+ctx.font='100 30px Arial';
+ctx.fillText("Hello World (100)",50,210);
+
+ctx.beginPath();
+//设定font-weight为600
+ctx.font='600 30px Arial';
+ctx.fillText("Hello World (600)",50,250);
+
+ctx.beginPath();
+//设定font-weight为900
+ctx.font='900 30px Arial';
+ctx.fillText("Hello World (900)",50,290);
+</script>
+</body>
+</html>

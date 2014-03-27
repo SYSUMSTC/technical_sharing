@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>drawImage和putImageData效率对比</title>
+</head>
+<body>
+<canvas id="myCanvas" width="800" height="400"></canvas>
+<div id="result"></div>
+<script type="text/javascript">
+var c=document.getElementById('myCanvas');
+var ctx=c.getContext('2d');
+var img = new Image();
+var img_mini = new Image();
+img.src="../face.jpg";
+img.onload = function(){
+	img_mini.src="../face_mini.jpg";
+	img_mini.onload = draw;
+};
+function draw(){
+  	var i,r,start,end;
+  	start = new Date();
+  	for (i=0; i < 1000; i++) {
+		ctx.drawImage(img,20,20);
+	};
+  	end = new Date();
+  	document.getElementById('result').innerHTML += "ctx.drawImage(img,20,20) 耗时：" + (end.getTime() - start.getTime());
+  	//chrome 104 firfox 95 safari：141 opera：62
+  	document.getElementById('result').innerHTML += "<br />";
+  	var imgData=ctx.getImageData(20,20,240,240);
+  	start = new Date();
+  	for (i=0; i < 1000; i++) {
+		ctx.putImageData(imgData,300,20);
+	};
+  	end = new Date();
+  	document.getElementById('result').innerHTML += "ctx.putImageData(imgData,300,20) 耗时：" + (end.getTime() - start.getTime());
+  	//chrome 484 firfox 482 safari：110 opera：219
+  	document.getElementById('result').innerHTML += "<br />";
+  	start = new Date();
+  	for (i=0; i < 1000; i++) {
+		ctx.drawImage(img,0,0,50,50,20,280,50,50);
+	};
+  	end = new Date();
+  	document.getElementById('result').innerHTML += "ctx.drawImage(img,0,0,50,50,20,280,50,50) 耗时：" + (end.getTime() - start.getTime());
+  	//chrome 9 firfox 15 safari：26 opera：11
+  	
+  	document.getElementById('result').innerHTML += "<br />";
+  	var imgData=ctx.getImageData(20,20,50,50);
+  	start = new Date();
+  	for (i=0; i < 1000; i++) {
+		ctx.putImageData(imgData,200,280);
+	};
+  	end = new Date();
+  	document.getElementById('result').innerHTML += "ctx.putImageData(imgData,200,280) 耗时：" + (end.getTime() - start.getTime());
+  	//chrome 22 firfox 37 safari：5 opera：10
+  	document.getElementById('result').innerHTML += "<br />";
+  	start = new Date();
+  	for (i=0; i < 1000; i++) {
+		ctx.drawImage(img_mini,300,280);
+	};
+  	end = new Date();
+  	document.getElementById('result').innerHTML += "ctx.drawImage(img_mini,20,280) 耗时：" + (end.getTime() - start.getTime());
+  	//chrome 8 firfox 15 safari：24 opera：6
+}
+</script>
+</body>
+</html>

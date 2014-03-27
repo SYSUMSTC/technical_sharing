@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"> 
+<title>Box2dWeb Demo</title>
+<script type="text/javascript" src="../../Box2dWeb-2.1.a.3.min.js"></script> 
+<script type="text/javascript" src="../../lufylegend-1.7.6.js"></script> 
+</head>
+<body onload='init(10,"mylegend",600,400,main,LEvent.INIT)'>
+<div id="mylegend">loading……</div>
+<script type="text/javascript">
+var backLayer,cLayer,box01;
+function main(){	
+	LGlobal.setDebug(true);	
+	backLayer = new LSprite();	
+	addChild(backLayer);	
+
+	LGlobal.box2d = new LBox2d();
+	cLayer = new LSprite();
+	cLayer.x = 0;
+	cLayer.y = 0;
+	backLayer.addChild(cLayer);
+	//通过顶点坐标数组，来加入上下左右四面墙
+	var shapeArray = [  
+	    [[0,0],[800,0],[800,10],[0,10]],
+	    [[800,0],[800,400],[790,400],[790,10]],
+	    [[800,400],[0,400],[0,390],[790,390]],
+	    [[0,0],[10,0],[10,400],[0,400]]
+	];  
+	cLayer.addBodyVertices(shapeArray,0,0,0,.5,.4,.5);  
+	//加入一些矩形物体
+	for(var i = 0;i<5;i++){
+		cLayer = new LSprite();
+	    cLayer.x = Math.random()*10*LGlobal.box2d.drawScale+10;
+	    cLayer.y = Math.random()*10*LGlobal.box2d.drawScale+10;
+		backLayer.addChild(cLayer);
+	    var w = (Math.random()*2 + 0.5)*LGlobal.box2d.drawScale;
+	    var h = (Math.random()*2 + 0.5)*LGlobal.box2d.drawScale;
+		cLayer.addBodyPolygon(w,h,1,5,0.4,0.2);
+	}
+	//加入一个圆形物体
+	box01 = new LSprite();
+	box01.x = 250;
+	box01.y = 200;
+	backLayer.addChild(box01);
+	box01.addBodyCircle(30,0,0,1,1,0.5,0.6);
+	//给圆形物体加上鼠标拖拽
+	box01.setBodyMouseJoint(true);
+	//加入循环侦听事件
+	backLayer.addEventListener(LEvent.ENTER_FRAME,onframe);
+}
+//循环函数
+function onframe(){
+	backLayer.x = LGlobal.width*0.5 - box01.x;	
+	if(backLayer.x > 0){
+		backLayer.x=0;
+	}else if(backLayer.x < LGlobal.width - 1600){
+		backLayer.x = LGlobal.width - 1600;
+	}
+	LGlobal.box2d.synchronous();
+}
+</script> 
+</body>
+</html>

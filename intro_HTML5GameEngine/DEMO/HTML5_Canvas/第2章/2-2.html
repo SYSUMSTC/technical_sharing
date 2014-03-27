@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+<canvas id="myCanvas" width="200" height="100">
+你的浏览器不支持HTML5
+</canvas>
+<script type="text/javascript">
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+ctx.lineWidth = 10;
+ctx.strokeStyle = "red";
+
+ctx.lineCap="butt";
+ctx.beginPath();
+ctx.moveTo(10,10);
+ctx.lineTo(150,10);
+ctx.stroke();
+
+ctx.lineCap="round";
+ctx.beginPath();
+ctx.moveTo(10,40);
+ctx.lineTo(150,40);
+ctx.stroke();
+
+ctx.lineCap="square";
+ctx.beginPath();
+ctx.moveTo(10,70);
+ctx.lineTo(150,70);
+ctx.stroke();
+</script>
+</body>
+</html>

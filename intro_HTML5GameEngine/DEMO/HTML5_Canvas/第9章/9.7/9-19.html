@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"> 
+<title>Box2dWeb Demo</title>
+<script type="text/javascript" src="../../Box2dWeb-2.1.a.3.min.js"></script> 
+<script type="text/javascript" src="../../lufylegend-1.7.6.min.js"></script> 
+</head>
+<body onload='init(10,"mylegend",600,400,main,LEvent.INIT)'>
+<div id="mylegend">loading……</div>
+<script type="text/javascript">
+var backLayer,cLayer,label;
+function main(){	
+	LGlobal.setDebug(true);	
+	backLayer = new LSprite();	
+	addChild(backLayer);	
+
+	LGlobal.box2d = new LBox2d();
+	cLayer = new LSprite();
+	cLayer.x = 0;
+	cLayer.y = 0;
+	backLayer.addChild(cLayer);
+	//通过顶点坐标数组，来加入上下左右四面墙
+	var shapeArray = [  
+	    [[0,0],[600,0],[600,10],[0,10]],
+	    [[600,0],[600,400],[590,400],[590,10]],
+	    [[600,400],[0,400],[0,390],[590,390]],
+	    [[0,0],[10,0],[10,400],[0,400]]
+	];  
+	cLayer.addBodyVertices(shapeArray,0,0,0,.5,.4,.5);  
+	//加入一些矩形物体
+	for(var i = 0;i<5;i++){
+		cLayer = new LSprite();
+	    cLayer.x = Math.random()*10*LGlobal.box2d.drawScale+10;
+	    cLayer.y = Math.random()*10*LGlobal.box2d.drawScale+10;
+		backLayer.addChild(cLayer);
+	    var w = (Math.random()*2 + 0.5)*LGlobal.box2d.drawScale;
+	    var h = (Math.random()*2 + 0.5)*LGlobal.box2d.drawScale;
+		cLayer.addBodyPolygon(w,h,1,5,0.4,0.2);
+	}
+	//加入一个圆形物体
+	var box01 = new LSprite();
+	box01.name = "mybox";
+	box01.x = 250;
+	box01.y = 200;
+	backLayer.addChild(box01);
+	box01.addBodyCircle(30,0,0,1,1,0.5,0.6);
+	//给圆形物体加上鼠标拖拽
+	box01.setBodyMouseJoint(true);
+	//为显示碰撞的力度，建立一个文本对象
+	label = new LTextField();
+	backLayer.addChild(label);
+	//加入碰撞侦听事件
+	LGlobal.box2d.setEvent(LEvent.POST_SOLVE,postSolve);
+}
+//侦听函数
+function postSolve(contact, impulse){
+	var objA = contact.GetFixtureA().GetBody().GetUserData();
+	var objB = contact.GetFixtureB().GetBody().GetUserData();
+	if(objA.type == "LSprite" && objA.name == "mybox"){
+		label.text = impulse.normalImpulses[0];
+	}else if(objB.type == "LSprite" && objB.name == "mybox"){
+		label.text = impulse.normalImpulses[0];
+	}
+}
+</script> 
+</body>
+</html>

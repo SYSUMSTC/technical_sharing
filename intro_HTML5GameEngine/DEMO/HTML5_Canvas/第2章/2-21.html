@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8" />
+</head>
+<body>
+<canvas id="myCanvas" width="500" height="350">
+你的浏览器不支持HTML5
+</canvas>
+<script type="text/javascript">
+var c=document.getElementById("myCanvas");
+var ctx=c.getContext("2d");
+
+ctx.moveTo(160,0);
+ctx.lineTo(160,300);
+ctx.stroke();
+
+ctx.beginPath();
+ctx.textAlign='start';
+ctx.font='30px Arial';
+ctx.fillText("Hello World",160,50);
+
+ctx.beginPath();
+ctx.textAlign='end';
+ctx.font='30px Arial';
+ctx.fillText("Hello World",160,100);
+
+ctx.beginPath();
+ctx.textAlign='left';
+ctx.font='30px Arial';
+ctx.fillText("Hello World",160,150);
+
+ctx.beginPath();
+ctx.textAlign='center';
+ctx.font='30px Arial';
+ctx.fillText("Hello World",160,200);
+
+ctx.beginPath();
+ctx.textAlign='right';
+ctx.font='30px Arial';
+ctx.fillText("Hello World",160,250);
+</script>
+</body>
+</html>

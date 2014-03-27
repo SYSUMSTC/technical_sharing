@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"> 
+<title>Box2dWeb Demo</title>
+<script type="text/javascript" src="../../Box2dWeb-2.1.a.3.min.js"></script> 
+<script type="text/javascript" src="../../lufylegend-1.7.6.min.js"></script> 
+</head>
+<body onload='init(10,"mylegend",600,400,main,LEvent.INIT)'>
+<div id="mylegend">loading……</div>
+<script type="text/javascript">
+var backLayer,cLayer;
+function main(){	
+	LGlobal.setDebug(true);	
+	backLayer = new LSprite();	
+	backLayer.graphics.drawRect(0,"#000000",[0, 0, 600, 400],false);
+	addChild(backLayer);	
+	gameInit();
+}
+function gameInit(){
+	LGlobal.box2d = new LBox2d();
+	cLayer = new LSprite();
+	backLayer.addChild(cLayer);
+	var shapeArray = [
+		[[0,0],[10,0],[10,400],[0,400]],
+		[[0,0],[600,0],[600,10],[0,10]],
+		[[590,0],[600,0],[600,400],[590,400]],
+		[[0,390],[600,390],[600,400],[0,400]]
+	];
+	cLayer.addBodyVertices(shapeArray,0,0,0,.5,.4,.5);
+	
+	for(var i=0;i<10;i++){
+		add();
+	}
+}
+function add(){
+	cLayer = new LSprite();
+    cLayer.x = Math.random()*10*LGlobal.box2d.drawScale;
+    cLayer.y = Math.random()*10*LGlobal.box2d.drawScale;
+	backLayer.addChild(cLayer);
+    var r = (Math.random() + 0.1)*LGlobal.box2d.drawScale;
+    if(Math.random() > 0.5) {
+    	cLayer.addBodyCircle(r,0,0,1,.5,.4,.5);
+    }else{
+    	cLayer.addBodyPolygon(r,r,1,5,.4,.2);
+    }
+	cLayer.setBodyMouseJoint(true);
+}
+</script> 
+</body>
+</html>

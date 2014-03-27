@@ -1,0 +1,102 @@
+function addwall()
+			{
+				backlayer.graphics.drawRect( 1, "#cc3300", [0,0,1000,10],true,"#cc3300");			//draw the wall
+				backlayer.graphics.drawRect( 1, "#cc3300", [990,0,10,400],true,"#cc3300");
+				backlayer.graphics.drawRect( 1, "#cc3300", [0,390,1000,10],true,"#cc3300");
+				backlayer.graphics.drawRect( 1, "#cc3300", [0,0,10,400],true,"#cc3300");
+
+				backlayer.graphics.drawRect( 1, "#cc3300", [220,230,10,170],true,"#cc3300");		//draw the first tree
+				backlayer.graphics.drawRect( 1, "#cc3300", [230,270,30,10],true,"#cc3300");			
+
+				backlayer.graphics.drawRect( 1, "#cc3300", [520,240,10,160],true,"#cc3300");		//second
+				backlayer.graphics.drawRect( 1, "#cc3300", [530,300,30,10],true,"#cc3300");
+
+				backlayer.graphics.drawRect( 1, "#cc3300", [670,290,10,110],true,"#cc3300");		//third
+				backlayer.graphics.drawRect( 1, "#cc3300", [680,320,30,10],true,"#cc3300");
+
+				backlayer.graphics.drawRect( 1, "#cc3300", [950,100,40,10],true,"#cc3300");			//stage1
+				backlayer.graphics.drawRect( 1, "#cc3300", [950,240,40,10],true,"#cc3300");			//stage2
+				
+				blayer = new LSprite();													//backlayer is walllayer,blayer is floor ground layer
+				blayer.name = "ground";
+				backlayer.addChild(blayer);
+			}
+			function addbuild()
+			{
+				loader1 = new LLoader();												//down image of building
+				afr = new LSprite();												
+				afr.name = "afr";												
+				addChild(afr);
+				loader1.addEventListener(LEvent.COMPLETE,addafr);						
+				loader1.load("img/afr.png","bitmapData");
+
+				loader2 = new LLoader();
+				obm = new LSprite();
+				obm.name = "obm";
+				backlayer.addChild(obm);
+				loader2.addEventListener(LEvent.COMPLETE,addobm);
+				loader2.load("img/obm.png","bitmapData");
+
+				loader3 = new LLoader();
+				xmy = new LSprite();
+				xmy.name = "xmy";
+				backlayer.addChild(xmy);
+				loader3.addEventListener(LEvent.COMPLETE,addxmy);
+				loader3.load("img/xmy.png","bitmapData");
+				
+				loader4 = new LLoader();
+				aef = new LSprite();
+				aef.name = "aef";
+				backlayer.addChild(aef);
+				loader4.addEventListener(LEvent.COMPLETE,addaef);
+				loader4.load("img/aef.png","bitmapData");
+
+				loader5 = new LLoader();
+				whi = new LSprite();
+				whi.name = "whi";
+				backlayer.addChild(whi);
+				loader5.addEventListener(LEvent.COMPLETE,addwhi);
+				loader5.load("img/whi.png","bitmapData");
+
+			}																	//last:add images and rigids of building,(x,y) is the rigid center!
+			function addafr()
+			{
+				afr.x = 700.5;														//LSprite.x  .y
+				afr.y = 100;
+				var bitmapdata = new LBitmapData(loader1.content);
+				var bitmap = new LBitmap(bitmapdata);
+				afr.addChild(bitmap);
+				afr.addBodyPolygon(40,59,1,5,0.4,0.5);
+			}	function addobm()
+			{
+				obm.x = 250.5;
+				obm.y = 100;
+				var bitmapdata = new LBitmapData(loader2.content);
+				var bitmap = new LBitmap(bitmapdata);
+				obm.addChild(bitmap);
+				obm.addBodyPolygon(40,41,1,5,0.4,0.5);
+			}	function addxmy()
+			{
+				xmy.x = 550.5;
+				xmy.y = 100;
+				var bitmapdata = new LBitmapData(loader3.content);
+				var bitmap = new LBitmap(bitmapdata);
+				xmy.addChild(bitmap);
+				xmy.addBodyPolygon(40,96,1,5,0.4,0.5);
+			}	function addaef()
+			{
+				aef.x = 966;
+				aef.y = 150;
+				var bitmapdata = new LBitmapData(loader4.content);
+				var bitmap = new LBitmap(bitmapdata);
+				aef.addChild(bitmap);
+				aef.addBodyPolygon(50,108,1,1,0.4,0.5);
+			}	function addwhi()
+			{
+				whi.x = 960.5;
+				whi.y = 40;
+				var bitmapdata = new LBitmapData(loader5.content);
+				var bitmap = new LBitmap(bitmapdata);
+				whi.addChild(bitmap);
+				whi.addBodyPolygon(60,45,1,5,0.4,0.5);
+			}

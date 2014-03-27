@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"> 
+<title>Box2dWeb Demo</title>
+<script type="text/javascript" src="../../Box2dWeb-2.1.a.3.min.js"></script> 
+<script type="text/javascript" src="../../lufylegend-1.7.6.min.js"></script> 
+</head>
+<body onload='init(10,"mylegend",600,400,main,LEvent.INIT)'>
+<div id="mylegend">loading……</div>
+<script type="text/javascript">
+var backLayer,cLayer;
+function main(){	
+	LGlobal.setDebug(true);	
+	backLayer = new LSprite();	
+	backLayer.graphics.drawRect(1,"#000",[0,0,600,400]);
+	addChild(backLayer);	
+
+	LGlobal.box2d = new LBox2d();
+	cLayer = new LSprite();
+	cLayer.x = 300;
+	cLayer.y = 390;
+	backLayer.addChild(cLayer);
+	cLayer.addBodyPolygon(600,10,0,5,0.4,0.2);
+	backLayer.addEventListener(LMouseEvent.MOUSE_DOWN,createBox);
+}
+function createBox(event){
+	var box01 = new LSprite();
+	box01.x = event.selfX;
+	box01.y = event.selfY;
+	backLayer.addChild(box01);
+	box01.addBodyCircle(30,0,0,1,1,0.5,0.6);
+	var force = 500;
+	var vec = new LGlobal.box2d.b2Vec2(force,-force);
+	box01.box2dBody.ApplyForce(vec, box01.box2dBody.GetWorldCenter());
+}
+</script> 
+</body>
+</html>
