@@ -1,0 +1,12 @@
+-r
+/home/hpcc/work/presentation/1/test_hot
+--data-limit-mb=500
+--stack-stitching
+--follow-child
+--type=frame:counters
+--stackwalk=offline
+--type=cpu:counters
+--type=cpu:stack
+--interval=10
+--
+./test_openmp

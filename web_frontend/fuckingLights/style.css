@@ -1,0 +1,17 @@
+input {
+  width: 80px;
+}
+table {
+  border-collapse: collapse;
+}
+td {
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+}
+.light {
+  background-color: yellow;
+}
+#remain {
+  color: red;
+}

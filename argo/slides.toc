@@ -1,0 +1,5 @@
+\beamer@endinputifotherversion {3.27pt}
+\beamer@sectionintoc {1}{Intro}{2}{0}{1}
+\beamer@sectionintoc {2}{Telnet}{3}{0}{2}
+\beamer@sectionintoc {3}{Web(the old version)}{8}{0}{3}
+\beamer@sectionintoc {4}{The New Argo}{11}{0}{4}
