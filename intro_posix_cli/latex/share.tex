@@ -1,0 +1,643 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme[left,hideothersubsections]{AAUsidebar}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{helvet}
+\usepackage{upquote}
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+
+%\definecolor{aau}{RGB}{33,26,82}
+\definecolor{aau}{RGB}{35,50,150}
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+
+\title{POSIX Command Line Utilities}
+\subtitle{Just A Glimpse}
+\author[Siyuan Liu]{Siyuan Liu\\\href{mailto:leasunhy@gmail.com}{{\tt leasunhy@gmail.com}}}
+\date{Nov 22\textsuperscript{nd}, 2015}
+
+\institute[
+    Microsoft Student Technology Club\\
+    Sun Yat-sen University
+]{
+    Microsoft Student Technology Club\\
+    Sun Yat-sen University
+}
+
+\setbeamercolor{sidebar}{fg=blue!20}
+\setbeamercolor{frametitle}{bg=aau}
+
+\begin{document}
+{\aauwavesbg
+\begin{frame}[plain,noframenumbering]
+    \setcounter{tocdepth}{1}
+    \titlepage
+\end{frame}
+}
+
+% TOC
+\begin{frame}{Agenda}{}
+\tableofcontents
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Prologue}\label{prologue}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Terminology}
+\begin{frame}{Prologue}{Some Terminology}
+
+\begin{itemize}[<+->]
+\item
+  {\bf POSIX}: \textbf{P}ortable \textbf{O}perating \textbf{S}ystem \textbf{I}nterface
+\item
+  {\bf CLI}: \textbf{C}ommand \textbf{L}ine \textbf{I}nterface
+\item
+  Part of \textbf{POSIX} are CLI utilities, the subject today.
+\item
+  {\bf kernel}: The kernel of OS is a program that manages resources and implement IPC.
+\item
+  {\bf shell}: Opposite of kernel. The machine/human interface.
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Motivation}
+\begin{frame}{Prologue}{Motivation}
+
+\begin{itemize}[<+->]
+\item
+  Solve various tasks efficiently.
+\item
+  Solve programming-needed tasks, without programming.
+\item
+  Functional programming like experience: simple utilities pipelined to
+  solve complex problems.
+\item
+  Most servers don't have a GUI, so CLI may be your only choice.
+\item
+  \textbf{Bigger} than \textbf{bigger}.
+\item
+  ... Just bacause it's a lot of fun :-)
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Shell Basics}\label{shell-basics}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Basics of Basics}
+\begin{frame}{Shell Basics}{Basics of Basics}
+
+\begin{itemize}[<+->]
+\item
+  \texttt{cd}, \texttt{pwd}, \texttt{ls}
+\item
+  \texttt{cp}, \texttt{mv}, \texttt{rm}
+\item
+  \texttt{echo}
+\item
+  Running an executable.
+\item
+  Interruptting a running command: \texttt{Ctrl+C}.
+\item
+  Input an \texttt{End Of File}: \texttt{Ctrl+D}.
+\item
+  Suspending a running command: \texttt{Ctrl+Z}.
+\item
+  ... and resuming: \texttt{fg}.
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Arguments}
+\begin{frame}{Shell Basics}{Arguments}
+
+\begin{itemize}[<+->]
+\item
+  \texttt{ls\ /etc} lists the contents of \texttt{/etc}
+\item
+  \ldots{} where \texttt{ls} is the name of the command,
+\item
+  \ldots{} and \texttt{/etc} is the \textbf{SECOND} argument
+  (argv{[}1{]}).
+\item
+  Where has the \textbf{FIRST} argument gone?
+\item
+  It's the name of the executable:\\
+  here, the first argument is \texttt{ls}.
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Key Bindings}
+\begin{frame}{Shell Basics}{Key Bindings (Emacs-like)}
+
+\begin{itemize}[<+->]
+\item
+  Completion: \texttt{Tab}
+\item
+  Fast cursor movement:\\
+  \texttt{Ctrl/Alt+F}, \texttt{Ctrl/Alt+B}, \texttt{Ctrl+A/E}
+\item
+  Repeat: \texttt{Alt+A}.
+\item
+  Clear: \texttt{Ctrl+L}
+\item
+  Fast line editing:\\
+  \texttt{Alt+D\ /\ Ctrl+W}, \texttt{Alt+W\ /\ Ctrl+K},
+  \texttt{Ctrl+H/D}
+\item
+  Reverse search: \texttt{Ctrl+R}\\
+  -- it is awesome!
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Glob}
+\begin{frame}{Shell Basics}{Glob}
+
+\begin{itemize}[<+->]
+\item
+  \texttt{*}: matches anything, greedily.
+\item
+  \texttt{\{\}}:\\
+  \texttt{abc\{1,\ 2\}} expands into \texttt{abc1\ abc2}\\
+  \texttt{abc\{1..10\}} expands into
+  \texttt{abc1\ abc2\ abc3\ abc4\ ...\ abc10}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Pipes}
+\begin{frame}{Shell Basics}{Pipes}
+
+\begin{itemize}
+\item
+  Example: \texttt{echo\ 1\ 2\ \textbar{}\ ./a.out}
+\item
+  Example: \texttt{./a.out} and then input \texttt{1\ 2}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{IO Redirection}
+\begin{frame}{Shell Basics}{Input/output Redirection}
+
+\begin{itemize}
+\item
+  \texttt{\textgreater{}}, \texttt{\textgreater{}\textgreater{}}
+\item
+  \texttt{\textless{}}
+\item
+  Special: \texttt{\textless{}\textless{}}.
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Special Files}
+\begin{frame}{Shell Basics}{Special files}
+
+\begin{itemize}[<+->]
+\item
+  \texttt{/dev/stdin}: stdin. Any explanation needed?
+\item
+  \texttt{/dev/stdout}: stdout. ?
+\item
+  \texttt{/dev/zero}, \texttt{/dev/one}: zero and one.
+\item
+  \texttt{/proc/meminfo}, \texttt{/proc/cpuinfo}:\\
+  Memory/CPU information.
+\item
+  \texttt{/proc/\textless{}id:int\textgreater{}}:\\
+  Information of the process with pid \texttt{id}.
+\item
+  \texttt{/dev/null}:\\
+  BLACK HOLE.
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt /dev/null}
+\begin{frame}{Shell Basics}{\texttt{/dev/null}: Black Hole Explained}
+
+\begin{itemize}[<+->]
+\item
+  What black hole?
+\item
+  Why black hole?
+\item
+  Example: \texttt{cat\ \textgreater{}\ /dev/null}
+\item
+  Jokes:
+\item
+  Please send complains to /dev/null.
+\item
+  I've learned all my courses and remembered them using my /dev/null.
+\item
+  I surely saved my money from 11.11. I put them in my /dev/null.
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{General Usage}
+\begin{frame}{Shell Basics}{General usage}
+
+\begin{itemize}[<+->]
+\item
+  \texttt{man}: Read manual for the command.
+\item
+  \texttt{apropos}: Search manual page title and description.
+\item
+  \texttt{awesome-command\ -\/-help}: Show help for
+  \texttt{awesome-command}.
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Basic Utilities}\label{basic-utilities}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt cat}
+\begin{frame}{Basic Utilities}{\texttt{cat} - concatenate file(s)}
+
+\begin{itemize}[<+->]
+\item
+  Example: \texttt{cat\ 1.txt}
+\item
+  Example: \texttt{cat\ 1.txt\ 2.txt}
+\item
+  Use case: stay tuned.
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt paste}
+\begin{frame}{Basic Utilities}{\texttt{paste} - join lines of files}
+
+\begin{itemize}[<+->]
+\item
+  Example: \texttt{paste\ 1.txt\ 2.txt}
+\item
+  Use case: \texttt{paste\ accounts\ passwords}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt head/tail}
+\begin{frame}{Basic Utilites}{\texttt{head} \& \texttt{tail} - first/last n lines of
+file}
+
+\begin{itemize}[<+->]
+\item
+  Example: \texttt{head\ longlongfile.log}
+\item
+  Example: \texttt{head\ -n\ 20\ longlongfile.log}
+\item
+  Example: \texttt{tail\ -f\ takeslongtime.log}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt sort}
+\begin{frame}{Basic Utilites}{\texttt{sort} - sort lines of file}
+
+\begin{itemize}[<+->]
+\item
+  Example: \texttt{sort\ accounts}
+\item
+  Example: \texttt{sort\ -n\ nums}
+\item
+  Practice:\\
+   \texttt{du\ -d\ 1} can be used to find disk usage of every
+  subdirectory in current working directory.\\
+   So, how can I find out the most space-consuming folder?
+\item
+  Answer:
+  \texttt{du\ -d\ 1\ \textbar{}\ sort\ -n\ \textbar{}\ tail\ -n\ 2}
+\item
+  How can you achieve the same using GUI, for instance, on Windows?
+\item
+  Maybe \textbf{grouping}? \(O(1)\) vs \(O(logn)\) :-)
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt uniq}
+\begin{frame}{Basic Utilites}{\texttt{uniq} - remove duplicated lines}
+
+\begin{itemize}[<+->]
+\item
+  Example: \texttt{uniq\ dup.txt}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt wc}
+\begin{frame}{Basic Utilites}{\texttt{wc} - count words/lines of files}
+
+\begin{itemize}[<+->]
+\item
+  Example: \texttt{wc\ -l\ cool.cpp}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\section{Practise Time}\label{practise-time--}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Practice: Problem 1}
+\begin{frame}{Practise Time :-)}{Problem 1}
+
+\begin{itemize}[<+->]
+\item
+  Problem Statement:\\
+  I'm in a folder, which contains numerous C++ source files.\\
+  I want to know how many lines of C++ code reside in this folder.
+\item
+  Answer: \texttt{wc\ -l\ *.cpp}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Practice: Problem 2}
+\begin{frame}{Practise Time :-)}{Problem 2}
+
+\begin{itemize}[<+->]
+\item
+  Problem Statement:\\
+  For some reason (explained later), I want to concatenate all the c++
+  files in the current folder into a single file.
+\item
+  Answer: \texttt{cat\ *.cpp\ \textgreater{}\ total.cpp}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Intermidiate Utilities}\label{Intermidiate-tools}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt xargs}
+\begin{frame}{Intermidiate Utilities}{\texttt{xargs} - build and execute commands from stdin}
+
+\begin{itemize}[<+->]
+\item
+  Example: \texttt{echo\ 1\ 2\ 3\ \textbar{}\ xargs\ echo}
+\item
+  Example: \texttt{echo\ 1\ 2\ 3\ \textbar{}\ xargs\ -n\ 1\ echo}
+\item
+  Example: \texttt{echo\ 1\ 2\ 3\ \textbar{}\ xargs\ -P\ 2\ -n\ 1\ echo}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt find}
+\begin{frame}{Intermidiate Utilities}{\texttt{find} - search for files in a directory hierarchy}
+
+\begin{itemize}[<+->]
+\item
+  Example: \texttt{find\ .\ -type\ f\ -name\ \textbackslash{}*.cpp}
+\item
+  Example:
+  \texttt{find\ .\ -type\ d\ -iname\ \textbackslash{}*a\textbackslash{}*\ -exec\ ls\ \{\}}
+\item
+  Practise:\\
+  I want to know how many lines of python code I wrote for a project.\\
+  Now I'm in \texttt{/}, and the project is in
+  \texttt{\textasciitilde{}/Documents/project/SYSU-Software-2015/}.\\
+  What should I do?
+\item
+  Answer:
+  \texttt{find\ \textasciitilde{}/Documents/project/SYSU-Software-2015/\ -type\ f\ -name\ \textbackslash{}*.py\ \textbar{}\ wc\ -l}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt grep}
+\begin{frame}{Intermidiate Utilities}{\texttt{grep} - find matching lines in files}
+
+\begin{itemize}[<+->]
+\item
+  Example: \texttt{grep\ iostream\ a.cpp}
+\item
+  Example: \texttt{grep\ -n\ vector\ a.cpp}
+\item
+  Example:
+  \texttt{find\ .\ -type\ f\ -name\ \textbackslash{}*.py\ \textbar{}\ xargs\ grep\ -ni\ taskhall}
+\item
+  Example: \texttt{grep\ -\/-include=*.py\ -rni\ taskhall}
+\item
+  Example:
+  \texttt{grep\ -rne\ \textquotesingle{}\textbackslash{}d+\textquotesingle{}}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt sed}
+\begin{frame}{Intermidiate Utilities}{\texttt{sed} - line based text processing}
+
+\begin{itemize}[<+->]
+\item
+  Example:
+  \texttt{sed\ -i\ -\/-\ \textquotesingle{}s/127.0.0.1/10.1.10.1/g\textquotesingle{}\ *.conf}
+\item
+  Example:
+  \texttt{sed\ -\/-\ \textquotesingle{}/\^{}\#\#/a\textbackslash{}\%666\textquotesingle{}\ posix\_cli\_tools.md}
+\item
+  Example:
+  \texttt{sed\ -\/-\ \textquotesingle{}/\^{}\#\#/i\textbackslash{}\%\%\%\%\%\%\textquotesingle{}\ posix\_cli\_tools.md}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt diff}
+\begin{frame}{Intermidiate Utilities}{\texttt{diff} - find differences between files/folders}
+    \begin{itemize}
+        \item
+            Example:
+            \texttt{diff\ a.txt\ b.txt}
+        \item
+            Example:
+            \texttt{diff\ 1.dir\ 2.dir}
+    \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt patch}
+\begin{frame}{Intermidiate Utilities}{\texttt{patch} - apply difference file}
+    \begin{itemize}
+        \item
+            Example:
+            \texttt{patch orig patch}
+    \end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Wonderful Tools}\label{wonderful-tools}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt Foreword}
+\begin{frame}{Wonderful Tools}{Some Foreword}
+
+\begin{itemize}
+\item
+    The tools I am going to introduce to you are not part of \texttt{POSIX}.
+\item
+    These great tools are not \texttt{*nix}-limited. \texttt{Windows} have them too!
+\item
+    They all require some time to learn. Fear not, the time you spent on them will pay.
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt Editor}
+\begin{frame}{Wonderful Tools}{Holy War of Editors: \texttt{vim} or \texttt{emacs}?}
+
+\begin{itemize}[<+->]
+\item
+  Among numerous choices of editors, \texttt{vim} and \texttt{emacs}
+  have distinguished themselves from the others.
+\item
+  \texttt{vim}: The God of Editor.
+\item
+  \texttt{emacs}: The Editor of God.
+\item
+  Demostration.
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\LaTeX{}}
+\begin{frame}{Wonderful Tools}{Crafted by the Author of TAOCP: \texttt{TeX}}
+
+\begin{itemize}
+\item
+  \TeX{} is the most widespread, most advanced and most
+  professional typesetting system.
+\item
+  \LaTeX{} handles content side of document, while \TeX{}
+  handles the layout side.\\
+  Together, marvelous documents are made.
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt pandoc}
+\begin{frame}{Wonderful Tools}{Universal Document Converter: \texttt{pandoc}}
+
+\begin{itemize}[<+->]
+\item
+  Ever fancied conversion between \texttt{docx} and \texttt{html},
+  \texttt{markdown} and \texttt{latex}, even \texttt{markdown} and
+  \texttt{h5\ slides}?
+\item
+  \texttt{pandoc} comes to rescue!
+\item
+  \textbf{These} slides are converted from \texttt{markdown} :-)
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\tt git}
+\begin{frame}{Wonderful Tools}{The Most Popular And Easy-to-use VCS: \texttt{git}}
+
+\begin{itemize}[<+->]
+\item
+  Use \texttt{git}, use \texttt{git}, use \texttt{git}!
+\item
+  Demonstration.
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conclusion}\label{conslusion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Conclusion}
+
+\begin{itemize}[<+->]
+\item
+  To learn them, use them to solve real problems (and for fun).
+\item
+  Never feel ashamed for forgetting the command line options of a command.
+  Just use \texttt{--help} or \texttt{man} when you need reference.
+\item
+  Have fun with CLI!
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Conclusion}
+
+    \begin{center}
+        {\LARGE Thank you!}\\
+        ~\\
+        Brought to you by \emph{Siyuan Liu}, MSTC, SYSU.\\
+        {\tt Nov 22\textsuperscript{nd}, 2015}
+    \end{center}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+
